@@ -16,17 +16,8 @@ const Character = ({ isMobile }) => {
   return (
     <mesh>
       {/* <hemisphereLight intensity={0.5} groundColor='black' /> */}
-      <ambientLight intensity={1}/>
-      <directionalLight position={[3, 2, 1]} />
-      {/* <spotLight
-        position={[-20, 40, 10]}
-        angle={0.12}
-        penumbra={1}
-        intensity={0.5}
-        // castShadow
-        shadow-mapSize={1024}
-      /> */}
-      {/* <pointLight intensity={1} /> */}
+      <ambientLight intensity={0.2}/>
+      <directionalLight position={[3, 10, 1]} intensity={2.2} />
       <primitive
         ref={group}
         object={scene}
@@ -40,46 +31,41 @@ const Character = ({ isMobile }) => {
 
 const CharacterCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
+  console.log(isMobile,'hi');
 
   useEffect(() => {
-    // Add a listener for changes to the screen size
-    const mediaQuery = window.matchMedia("(max-width: 500px)");
-
-    // Set the initial value of the `isMobile` state variable
+    const mediaQuery = window.matchMedia('(max-width: 500)');
+    
     setIsMobile(mediaQuery.matches);
 
-    // Define a callback function to handle changes to the media query
     const handleMediaQueryChange = (event) => {
       setIsMobile(event.matches);
+      console.log('sup',event.matches);
     };
 
-    // Add the callback function as a listener for changes to the media query
     mediaQuery.addEventListener("change", handleMediaQueryChange);
 
-    // Remove the listener when the component is unmounted
     return () => {
       mediaQuery.removeEventListener("change", handleMediaQueryChange);
     };
   }, []);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative" }} className='lg:h-[85vh] lg:mt-0 h-[50vh] mt-8'>
       <Canvas
         shadows
         dpr={[1, 2]}
         camera={{fov: 60, position: [6, 6, 6]}}
         gl={{ preserveDrawingBuffer: true }}
-        style={{ width: "100%", height: "80vh", position: "absolute", top: 0, left: 0, zIndex: 1 }}
+        style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0, zIndex: 1 }}
       >
         <Suspense fallback={<CanvasLoader />}>
           <OrbitControls
             enableZoom={false}
             enableRotate={false}
-            // maxPolarAngle={Math.PI / 2}
-            // minPolarAngle={Math.PI / 2}
           />
           <Character isMobile={isMobile} />
-          <Sphere args={[1, 100, 200]} scale={12} position={isMobile ? [0, -3, -2.2] : [-15, -12, -15]}>
+          <Sphere args={[1, 100, 200]} scale={12} position={isMobile ? [0, -3, -2.2] : [-14, -12, -14]}>
               <MeshDistortMaterial color="#3d1c58" distort={0.4} speed={2} />
             </Sphere>
         </Suspense>
