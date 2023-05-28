@@ -31,7 +31,6 @@ const Character = ({ isMobile }) => {
 
 const CharacterCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
-  console.log(isMobile,'hi');
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 500)');
@@ -40,7 +39,6 @@ const CharacterCanvas = () => {
 
     const handleMediaQueryChange = (event) => {
       setIsMobile(event.matches);
-      console.log('sup',event.matches);
     };
 
     mediaQuery.addEventListener("change", handleMediaQueryChange);
