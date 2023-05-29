@@ -3,10 +3,12 @@ const styles = {
   paddingY: "sm:py-16 py-6",
   padding: "sm:px-16 px-6 sm:py-16 py-10",
 
+  heroHiImText:
+    "font-bold lg:text-[70px] lg:leading-[70px] md:text-[80px] md:leading-[90px] sm:text-[90px] sm:leading-[110px] xs:text-[70px] xs:leading-[75px] text-[30px] mt-2",
   heroHeadText:
-    "font-black text-white lg:text-[80px] md:text-[90px] md:leading-[100px] sm:text-[100px] sm:leading-[120px] xs:text-[80px] xs:leading-[85px] text-[40px] lg:leading-[98px] mt-2",
+    "font-bold lg:text-[80px] lg:leading-[85px] md:text-[90px] md:leading-[100px] sm:text-[100px] sm:leading-[120px] xs:text-[80px] xs:leading-[85px] text-[40px] ",
   heroSubText:
-    "text-[#dfd9ff] font-medium lg:text-[30px] sm:text-[26px] xs:text-[20px] text-[12px] lg:leading-[40px]",
+    "text-[#dfd9ff] font lg:text-[16px] sm:text-[24px] xs:text-[14px] text-[12px] lg:leading-[26px] pt-6",
 
   sectionHeadText:
     "text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]",

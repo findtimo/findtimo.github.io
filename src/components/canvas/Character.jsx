@@ -17,12 +17,12 @@ const Character = ({ isMobile }) => {
     <mesh>
       {/* <hemisphereLight intensity={0.5} groundColor='black' /> */}
       <ambientLight intensity={0.2}/>
-      <directionalLight position={[3, 10, 1]} intensity={2.2} />
+      <directionalLight position={[3, 10, 1]} intensity={1.2} />
       <primitive
         ref={group}
         object={scene}
-        scale={isMobile ? 1.5 : 3.5}
-        position={isMobile ? [0, -3, -2.2] : [0, -5.5, 0]}
+        scale={isMobile ? 1.5 : 3}
+        position={[0, -5.5, 0]}
         dispose={null}
       />
     </mesh>
@@ -49,13 +49,13 @@ const CharacterCanvas = () => {
   }, []);
 
   return (
-    <div style={{ position: "relative" }} className='lg:h-[85vh] lg:mt-0 h-[50vh] mt-8'>
+    <div style={{ position: "relative" }} className='lg:h-[75vh] mt-0 h-[50vh]'>
       <Canvas
         shadows
         dpr={[1, 2]}
-        camera={{fov: 60, position: [6, 6, 6]}}
+        camera={{fov: 60, position: [6, 4, 6]}}
         gl={{ preserveDrawingBuffer: true }}
-        style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0, zIndex: 1 }}
+        style={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
       >
         <Suspense fallback={<CanvasLoader />}>
           <OrbitControls
@@ -63,7 +63,7 @@ const CharacterCanvas = () => {
             enableRotate={false}
           />
           <Character isMobile={isMobile} />
-          <Sphere args={[1, 100, 200]} scale={12} position={isMobile ? [0, -3, -2.2] : [-14, -12, -14]}>
+          <Sphere args={[1, 100, 200]} scale={12} position={isMobile ? [0, -3, -2.2] : [-14, -13, -14]}>
               <MeshDistortMaterial color="#3d1c58" distort={0.4} speed={2} />
             </Sphere>
         </Suspense>

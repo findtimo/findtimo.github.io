@@ -13,6 +13,17 @@
   color-scheme: dark;
 }
 
+.scroll-container {
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+}
+
+.scroll-item {
+  height:100vh;
+  scroll-snap-align: center;
+}
+
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;
