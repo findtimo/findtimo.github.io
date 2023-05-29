@@ -11,6 +11,7 @@ import { fadeIn, textVariant } from "../utils/motion";
 const ProjectCard = ({
   index,
   name,
+  desc,
   description,
   tags,
   image,
@@ -18,7 +19,48 @@ const ProjectCard = ({
 }) => {
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.2, 0.75)}>
-      <div
+      <div className='relative bg-tertiary sm:w-[340px] h-[420px] w-full rounded-2xl overflow-hidden'>
+          <div style={{ backgroundImage: `url(${image})` }} className='absolute  inset-0 h-full w-full bg-cover bg-center z-[0]'></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50 z-[0]" />
+
+          <div className='absolute inset-6 flex flex-col z-[2]'>
+          <div className='mt-0'>
+            <h3 className='text-white font-bold text-[18px]'>{name}</h3>
+            <p className='mt-1 text-white text-[12px]'>{desc}</p>
+          </div>
+          <div className='mt-auto flex'>
+            <div className='flex flex-wrap gap-2'>
+              {tags.map((tag) => (
+                <p
+                  key={`${name}-${tag.name}`}
+                  className={`text-[14px] ${tag.color}`}
+                >
+                  #{tag.name}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+
+          {/* <div className='absolute inset-8 flex flex-col justify-end z-[2]'>
+            <div className='mt-5'>
+              <h3 className='text-white font-bold text-[18px]'>{name}</h3>
+              <p className='mt-2 text-white text-[12px]'>{description}</p>
+            </div>
+            <div className='mt-4 flex flex-wrap gap-2'>
+              {tags.map((tag) => (
+                <p
+                  key={`${name}-${tag.name}`}
+                  className={`text-[14px] ${tag.color}`}
+                >
+                  #{tag.name}
+                </p>
+              ))}
+            </div>            
+          </div> */}
+
+      </div>
+      {/* <div
         options={{
           max: 45,
           scale: 1,
@@ -62,7 +104,7 @@ const ProjectCard = ({
             </p>
           ))}
         </div>
-      </div>
+      </div> */}
     </motion.div>
   );
 };
@@ -82,13 +124,11 @@ const Works = () => {
         >
           Following projects showcases my skills and experience through
           real-world examples of my work. Each project is briefly described with
-          links to code repositories and live demos in it. It reflects my
-          ability to solve complex problems, work with different technologies,
-          and manage projects effectively.
+          links to code repositories and live demos.
         </motion.p>
       </div>
 
-      <div className='mt-20 flex flex-wrap gap-7'>
+      <div className='mt-8 flex flex-wrap gap-7'>
         {projects.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />
         ))}

@@ -228,6 +228,7 @@ const testimonials = [
 const projects = [
   {
     name: "PixelPaws",
+    desc: "Web 3.0 application using Solidity that allows users to mint and manage their PixelPaws, an NFT token by me",
     description:
       "Web 3.0 application utilising solidity to enable users to mint PixelPaws, an NFT token created by me, while also providing a platform to view, manage their own PixelPaws.",    tags: [
       {
@@ -252,6 +253,7 @@ const projects = [
   },
   {
     name: "Splunk Dashboard",
+    desc: "Splunk-based UI/UX analytics dashboard for SLA and incident reporting.",
     description:
       "UI/UX analytics dashboard displaying service level agreements and incident reports for management team, running on Splunk framework.",
     tags: [
@@ -273,6 +275,7 @@ const projects = [
   },
   {
     name: "Hoster",
+    desc: "Android music app with Lounge feature for effortless music streaming and sharing.",
     description:
       "Android app that enables users to effortlessly stream and share their favorite songs through the Lounge feature, connecting with friends and audiences to create an engaging music-sharing experience.",
     tags: [
@@ -294,6 +297,7 @@ const projects = [
   },
   {
     name: "The Legends",
+    desc: "F&B web application with an account management system for order placement and tracking.",
     description:
       "F&B web application with with a comprehensive account feature, enabling users to create an account, place orders, and effortlessly track their past orders. All data is stored in MySQL managed by PHPMyAdmin.",
     tags: [
@@ -315,6 +319,7 @@ const projects = [
   },,
   {
     name: "Carked",
+    desc: "Car rental web app catering to both users and rental companies, offering seamless booking and fleet management.",
     description:
       "A web-based platform for convenient car rental solutions. Users can search, book, and manage rentals from multiple providers. It also has a dedicated interface for car rental companies to list and manage their fleet.",
         tags: [
