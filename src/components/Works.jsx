@@ -1,5 +1,5 @@
-import React from "react";
-import { Tilt } from "react-tilt";
+import React, { useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
@@ -7,6 +7,7 @@ import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
+import {FaArrowRight, FaArrowLeft} from 'react-icons/fa'
 
 const ProjectCard = ({
   index,
@@ -18,98 +19,46 @@ const ProjectCard = ({
   source_code_link,
 }) => {
   return (
-    <motion.div variants={fadeIn("up", "spring", index * 0.2, 0.75)}>
-      <div className='relative bg-tertiary sm:w-[340px] h-[420px] w-full rounded-2xl overflow-hidden'>
+    // <motion.div variants={fadeIn("up", "spring", index * 0.2, 0.75)}>
+    <div>
+      <div className='relative bg-tertiary sm:w-[340px] h-[430px] w-full rounded-2xl overflow-hidden'>
           <div style={{ backgroundImage: `url(${image})` }} className='absolute  inset-0 h-full w-full bg-cover bg-center z-[0]'></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-50 z-[0]" />
 
           <div className='absolute inset-6 flex flex-col z-[2]'>
-          <div className='mt-0'>
-            <h3 className='text-white font-bold text-[18px]'>{name}</h3>
-            <p className='mt-1 text-white text-[12px]'>{desc}</p>
-          </div>
-          <div className='mt-auto flex'>
-            <div className='flex flex-wrap gap-2'>
-              {tags.map((tag) => (
-                <p
-                  key={`${name}-${tag.name}`}
-                  className={`text-[14px] ${tag.color}`}
-                >
-                  #{tag.name}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
-
-          {/* <div className='absolute inset-8 flex flex-col justify-end z-[2]'>
-            <div className='mt-5'>
+            <div className='mt-0'>
               <h3 className='text-white font-bold text-[18px]'>{name}</h3>
-              <p className='mt-2 text-white text-[12px]'>{description}</p>
+              <p className='mt-1 text-white text-[12px]'>{desc}</p>
             </div>
-            <div className='mt-4 flex flex-wrap gap-2'>
-              {tags.map((tag) => (
-                <p
-                  key={`${name}-${tag.name}`}
-                  className={`text-[14px] ${tag.color}`}
-                >
-                  #{tag.name}
-                </p>
-              ))}
-            </div>            
-          </div> */}
-
-      </div>
-      {/* <div
-        options={{
-          max: 45,
-          scale: 1,
-          speed: 450,
-        }}
-        className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
-      >
-        <div className='relative w-full h-[230px]'>
-          <img
-            src={image}
-            alt='project_image'
-            className='w-full h-full object-cover rounded-2xl'
-          />
-
-          <div className='absolute inset-0 flex justify-end m-3 card-img_hover'>
-            <div
-              onClick={() => window.open(source_code_link, "_blank")}
-              className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
-            >
-              <img
-                src={github}
-                alt='source code'
-                className='w-1/2 h-1/2 object-contain'
-              />
+            <div className='mt-auto flex'>
+              <div className='flex flex-wrap gap-2'>
+                {tags.map((tag) => (
+                  <p
+                    key={`${name}-${tag.name}`}
+                    className={`text-[14px] ${tag.color}`}
+                  >
+                    #{tag.name}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+      </div>
+    </div>
 
-        <div className='mt-5'>
-          <h3 className='text-white font-bold text-[24px]'>{name}</h3>
-          <p className='mt-2 text-secondary text-[14px]'>{description}</p>
-        </div>
-
-        <div className='mt-4 flex flex-wrap gap-2'>
-          {tags.map((tag) => (
-            <p
-              key={`${name}-${tag.name}`}
-              className={`text-[14px] ${tag.color}`}
-            >
-              #{tag.name}
-            </p>
-          ))}
-        </div>
-      </div> */}
-    </motion.div>
+    // </motion.div>
   );
 };
 
 const Works = () => {
+
+  const [width, setWidth] = useState(0);
+  const carousel = useRef();
+
+  useEffect(() => {
+    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+  }, []);
+
   return (
     <>
       <motion.div variants={textVariant()}>
@@ -128,11 +77,17 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className='mt-8 flex flex-wrap gap-7'>
-        {projects.map((project, index) => (
-          <ProjectCard key={`project-${index}`} index={index} {...project} />
-        ))}
-      </div>
+      <motion.div className='mt-8 flex flex-wrap gap-7' variants={fadeIn("left", "spring",  0.2, 0.75)} >
+        <motion.div ref={carousel} className="carousel" whileTap={{cursor: "grabbing"}}>
+          <motion.div className="carousel-inner" drag="x" dragConstraints={{right:0, left:-width}}>
+            {projects.map((project, index) => (
+              <motion.div className="carousel-item sm:w-[340px] h-[430px] w-full" key={`project-${index}`}>
+                <ProjectCard key={`project-${index}`} index={index} {...project}/>
+              </motion.div>
+            ))}
+            </motion.div>
+        </motion.div>
+      </motion.div>
     </>
   );
 };

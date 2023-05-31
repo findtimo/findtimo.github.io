@@ -13,6 +13,27 @@
   color-scheme: dark;
 }
 
+.carousel {
+  cursor: grab;
+  overflow: hidden;
+}
+
+.carousel-item {
+  width:30%;
+  margin-right: 30px;
+}
+
+/* .carousel-item img {
+  width: 100%;
+  height:100%;
+  border-radius: 2rem;
+  pointer-events: none;
+} */
+
+.carousel-inner {
+  display:flex;
+}
+
 .scroll-container {
   overflow: auto;
   scroll-snap-type: y mandatory;
