@@ -35,15 +35,29 @@
 }
 
 .scroll-container {
-  overflow: auto;
+  /* display: flex;
+  flex-direction: column; */
   scroll-snap-type: y mandatory;
-  height: 100vh;
+  /* scroll-snap-stop: normal; */
+  height: 100vh; 
+  overflow-y: scroll;
 }
 
 .scroll-item {
-  height:100vh;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
+  /* flex-shrink: 0; */
 }
+
+.scroll-item-1 {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+.flex.flex-row {
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;

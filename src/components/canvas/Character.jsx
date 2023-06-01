@@ -4,14 +4,27 @@ import { OrbitControls, Preload, useGLTF, useAnimations, Sphere, MeshDistortMate
 
 import CanvasLoader from "../Loader";
 
-const Character = ({ isMobile }) => {
+const Character = ({ isMobile, playAnimation }) => {
     const group = useRef();
     const { scene, animations } = useGLTF("./character/scene.glb");
     const { actions, mixer } = useAnimations(animations, group);
 
+    // actions.float.timeScale = 0.5;
+
     useEffect(() => {
-        actions.float.play();
-    }, [mixer]);
+      if (playAnimation) {
+        actions.idle.stop();
+        actions.transition.play().crossFadeFrom(actions.float.play(), 0.3);
+        actions.idle.play().crossFadeFrom(actions.transition, 0.3);
+        actions.transition.stop();
+      } else {
+        actions.float.stop();
+        actions.transition.play().crossFadeFrom(actions.idle.play(), 0.3);
+        actions.float.play().crossFadeFrom(actions.transition, 0.3);
+        actions.transition.stop();
+      }
+    }, [playAnimation]);
+  
 
   return (
     <mesh>
@@ -29,8 +42,11 @@ const Character = ({ isMobile }) => {
   );
 };
 
-const CharacterCanvas = () => {
+const CharacterCanvas = (scrollPosition) => {
   const [isMobile, setIsMobile] = useState(false);
+  const [playAnimation, setPlayAnimation] = useState(false);
+  const containerRef = useRef();
+  const [prevScrollY, setPrevScrollY] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 500)');
@@ -48,8 +64,33 @@ const CharacterCanvas = () => {
     };
   }, []);
 
+  useEffect(() => {
+  
+    const handleScroll = () => {
+      const scrollY = scrollPosition.scrollPass;
+      const triggerPoint = scrollPosition.scrollMax/2;
+      // console.log(scrollY, prevScrollY );
+  
+      if (scrollY > prevScrollY && prevScrollY < triggerPoint && scrollY >= triggerPoint) {
+        console.log('1');
+        setPlayAnimation(true);
+      } else if (scrollY < prevScrollY && prevScrollY >= triggerPoint && scrollY < triggerPoint) {
+        console.log('2');
+        setPlayAnimation(false);
+      }
+
+      setPrevScrollY(scrollY);
+    };
+
+    handleScroll(); // Call the handler initially to set the animation state
+  
+    return () => {
+      // Cleanup function
+    };
+  }, [scrollPosition]);
+
   return (
-    <div style={{ position: "relative" }} className='lg:h-[75vh] mt-0 h-[50vh]'>
+    <div ref={containerRef} style={{ position: "relative" }} className='lg:h-[75vh] mt-0 h-[50vh]'>
       <Canvas
         shadows
         dpr={[1, 2]}
@@ -62,7 +103,7 @@ const CharacterCanvas = () => {
             enableZoom={false}
             enableRotate={false}
           />
-          <Character isMobile={isMobile} />
+          <Character isMobile={isMobile} playAnimation={playAnimation}/>
           <Sphere args={[1, 100, 200]} scale={12} position={isMobile ? [0, -3, -2.2] : [-14, -13, -14]}>
               <MeshDistortMaterial color="#3d1c58" distort={0.4} speed={2} />
             </Sphere>

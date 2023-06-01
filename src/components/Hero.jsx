@@ -26,7 +26,7 @@ const Hero = () => {
           </div>
         </div>
         <div className='flex-1'>
-          <CharacterCanvas />
+          {/* <CharacterCanvas /> */}
         </div>
       </div>
 
