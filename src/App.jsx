@@ -3,32 +3,44 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { CharacterCanvas } from '../src/components/canvas';
 import { About, Contact, Experience, Hero, Navbar, Tech, Works, StarsCanvas } from './components';
+import { styles } from "./styles";
+import { throttle } from 'lodash';
 
 const App = () => {
   const scrollContainerRef = useRef(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [scrollPass, setScrollPass] = useState(0);
-  const scrollMax = window.innerHeight * 1;
+  const [scrollMax, setScrollMax] = useState(window.innerHeight * 1);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = scrollContainerRef.current.scrollTop;
-      // const scrollMax = window.innerHeight * 1;
-      // console.log(scrollTop, scrollMax);
-
-      if(scrollTop > scrollMax) {
-        setScrollPosition(scrollMax - scrollTop);
-      } else {
-        setScrollPass(scrollTop);
+    
+    const handleScroll = throttle(() => {
+      const scrollCurr = scrollContainerRef.current.scrollTop;
+      
+      if (scrollCurr < scrollMax/2 && scrollPass > scrollMax/2) {  //update scrollPassOverToChar when 
+        setScrollPass(scrollCurr); //update character.jsx for animation
+      } else if (scrollCurr >= scrollMax/2 && scrollPass < scrollMax/2) {
+        setScrollPass(scrollCurr); //update character.jsx for animation
       }
-    };
+    }, 250);
 
     scrollContainerRef.current.addEventListener('scroll', handleScroll);
 
     return () => {
       scrollContainerRef.current.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [scrollPass, ]);
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setScrollMax(window.innerHeight * 1);
+  //   };
+
+  //   window.addEventListener('resize', handleResize);
+
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, []);
 
   return (
     <BrowserRouter>
@@ -36,18 +48,40 @@ const App = () => {
         <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
           <Navbar />
         </div>
-          <div className='fixed w-[100vw] h-[200vh]'>
-            <div className='absolute right-[10vw] w-[30%] h-[200%]' style={{ top: `${scrollPosition}px` }}>
-              <CharacterCanvas scrollPass={scrollPass} scrollMax={scrollMax} />
+        <div className="scroll-container" ref={scrollContainerRef}>
+
+        <div className="relative w-[auto] h-[200vh] scroll-section flex">
+          <div className='relative w-[100%]'>
+            <div className="scroll-content pt-12 md:pt-0">
+              <Hero />
+                <div className={`sticky right-0 top-0 pt-12 block md:hidden `}>
+                    <CharacterCanvas scrollPass={scrollPass} scrollMax={scrollMax} />
+                </div>
+            </div>
+            <div className="scroll-content">
+              <About />
             </div>
           </div>
-        <div className="scroll-container" ref={scrollContainerRef}>
-          <div className="scroll-item">
+          <div className='absolute flex justify-end w-[100vw] h-[200vh] z-[-1]'>
+            <div className='sticky w-[60%] h-[auto] '>
+              <div className={`sticky right-0 top-0 pt-12 hidden md:block `}>
+                  <CharacterCanvas scrollPass={scrollPass} scrollMax={scrollMax} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+          {/* <div className="scroll-item pt-6 md:pt-12">
             <Hero />
           </div>
+
+        <div className={`md:w-[60vw] w-full md:right-0 ${styles.paddingX} visible md:hidden `} style={{ top: `${scrollPosition}px` }}>
+            <CharacterCanvas scrollPass={scrollPass} scrollMax={scrollMax} />
+        </div>
           <div className="scroll-item">
             <About />
-          </div>
+          </div> */}
           {/* <Experience /> */}
           <div className="scroll-item">
             <Works />

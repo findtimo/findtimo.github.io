@@ -14,11 +14,13 @@ const Character = ({ isMobile, playAnimation }) => {
     useEffect(() => {
       if (playAnimation) {
         actions.idle.stop();
+        actions.transition.timeScale = 1;
         actions.transition.play().crossFadeFrom(actions.float.play(), 0.3);
         actions.idle.play().crossFadeFrom(actions.transition, 0.3);
         actions.transition.stop();
       } else {
         actions.float.stop();
+        actions.transition.timeScale = -1;
         actions.transition.play().crossFadeFrom(actions.idle.play(), 0.3);
         actions.float.play().crossFadeFrom(actions.transition, 0.3);
         actions.transition.stop();
@@ -69,7 +71,7 @@ const CharacterCanvas = (scrollPosition) => {
     const handleScroll = () => {
       const scrollY = scrollPosition.scrollPass;
       const triggerPoint = scrollPosition.scrollMax/2;
-      // console.log(scrollY, prevScrollY );
+      // console.log('test', scrollY, prevScrollY );
   
       if (scrollY > prevScrollY && prevScrollY < triggerPoint && scrollY >= triggerPoint) {
         console.log('1');
@@ -82,7 +84,7 @@ const CharacterCanvas = (scrollPosition) => {
       setPrevScrollY(scrollY);
     };
 
-    handleScroll(); // Call the handler initially to set the animation state
+    handleScroll();
   
     return () => {
       // Cleanup function
@@ -90,7 +92,7 @@ const CharacterCanvas = (scrollPosition) => {
   }, [scrollPosition]);
 
   return (
-    <div ref={containerRef} style={{ position: "relative" }} className='lg:h-[75vh] mt-0 h-[50vh]'>
+    <div ref={containerRef} className='relative lg:h-[75vh] mt-0 h-[50vh]'>
       <Canvas
         shadows
         dpr={[1, 2]}

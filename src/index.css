@@ -3,6 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind screens;
 
 * {
   margin: 0;
@@ -11,27 +12,6 @@
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
   color-scheme: dark;
-}
-
-.carousel {
-  cursor: grab;
-  overflow: hidden;
-}
-
-.carousel-item {
-  width:30%;
-  margin-right: 30px;
-}
-
-/* .carousel-item img {
-  width: 100%;
-  height:100%;
-  border-radius: 2rem;
-  pointer-events: none;
-} */
-
-.carousel-inner {
-  display:flex;
 }
 
 .scroll-container {
@@ -43,14 +23,37 @@
   overflow-y: scroll;
 }
 
+/* Hide the scrollbar for WebKit browsers (Chrome, Safari) */
+.scroll-container::-webkit-scrollbar {
+  display:none;
+}
+
 .scroll-item {
   scroll-snap-align: start;
-  /* flex-shrink: 0; */
 }
 
 .scroll-item-1 {
   scroll-snap-align: start;
   flex-shrink: 0;
+}
+
+.scroll-section {
+  height: auto; /* Set the desired height of each scrollable section */
+  width: 100%;
+  scroll-snap-type: y mandatory; /* Enable scroll snapping vertically */
+  scroll-snap-align: start; /* Snap the sections to the top of the container */
+  margin-bottom: 20px; /* Add some spacing between the sections */
+}
+
+.scroll-section::-webkit-scrollbar {
+  display:none;
+}
+
+
+.scroll-content {
+  /* Add styling to the scrollable content area */
+  height:100vh;
+  scroll-snap-align: start; /* Snap the content to the top of the section */
 }
 
 .flex.flex-row {
