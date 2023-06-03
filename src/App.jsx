@@ -30,18 +30,6 @@ const App = () => {
     };
   }, [scrollPass, ]);
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setScrollMax(window.innerHeight * 1);
-  //   };
-
-  //   window.addEventListener('resize', handleResize);
-
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, []);
-
   return (
     <BrowserRouter>
       <div className="relative z-0 bg-primary">
@@ -54,9 +42,9 @@ const App = () => {
           <div className='relative w-[100%]'>
             <div className="scroll-content pt-12 md:pt-0">
               <Hero />
-                <div className={`sticky right-0 top-0 pt-12 block md:hidden `}>
-                    <CharacterCanvas scrollPass={scrollPass} scrollMax={scrollMax} />
-                </div>
+              <div className={`sticky right-0 top-0 pt-12 block md:hidden `}>
+                  <CharacterCanvas scrollPass={scrollPass} scrollMax={scrollMax} />
+              </div>
             </div>
             <div className="scroll-content">
               <About />
@@ -70,27 +58,16 @@ const App = () => {
             </div>
           </div>
         </div>
-
-
-          {/* <div className="scroll-item pt-6 md:pt-12">
-            <Hero />
-          </div>
-
-        <div className={`md:w-[60vw] w-full md:right-0 ${styles.paddingX} visible md:hidden `} style={{ top: `${scrollPosition}px` }}>
-            <CharacterCanvas scrollPass={scrollPass} scrollMax={scrollMax} />
-        </div>
-          <div className="scroll-item">
-            <About />
-          </div> */}
           {/* <Experience /> */}
           <div className="scroll-item">
             <Works />
-            <div className="relative z-0">
+          </div>
+          <div className="scroll-item relative z-0">
               <Contact />
               <StarsCanvas />
             </div>
-          </div>
         </div>
+
       </div>
     </BrowserRouter>
   );

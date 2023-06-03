@@ -1,6 +1,8 @@
 import React, { Suspense, useEffect, useState, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF, useAnimations, Sphere, MeshDistortMaterial } from "@react-three/drei";
+// import { getObjectByName } from "three";
+import * as THREE from "three";
 
 import CanvasLoader from "../Loader";
 
@@ -27,6 +29,21 @@ const Character = ({ isMobile, playAnimation }) => {
       }
     }, [playAnimation]);
   
+    // useFrame(({ scene, camera }) => {
+    //   let headObject = null;
+    //   // group.current.getObjectByName("head");
+    
+    //   scene.traverse((object) => {
+    //     if (object.name === "head") {
+    //       headObject = object;
+    //     }
+    //   });
+    
+    //   if (headObject) {
+    //     headObject.lookAt(camera.position);
+    //   }
+    //   // group.current.getObjectByName("head").lookAt(camera.position);
+    // });
 
   return (
     <mesh>
@@ -44,7 +61,7 @@ const Character = ({ isMobile, playAnimation }) => {
   );
 };
 
-const CharacterCanvas = (scrollPosition) => {
+const CharacterCanvas = ({scrollPass, scrollMax}) => {
   const [isMobile, setIsMobile] = useState(false);
   const [playAnimation, setPlayAnimation] = useState(false);
   const containerRef = useRef();
@@ -69,15 +86,14 @@ const CharacterCanvas = (scrollPosition) => {
   useEffect(() => {
   
     const handleScroll = () => {
-      const scrollY = scrollPosition.scrollPass;
-      const triggerPoint = scrollPosition.scrollMax/2;
-      // console.log('test', scrollY, prevScrollY );
+      const scrollY = scrollPass;
+      const triggerPoint = scrollMax/2;
   
       if (scrollY > prevScrollY && prevScrollY < triggerPoint && scrollY >= triggerPoint) {
-        console.log('1');
+        // console.log('1');
         setPlayAnimation(true);
       } else if (scrollY < prevScrollY && prevScrollY >= triggerPoint && scrollY < triggerPoint) {
-        console.log('2');
+        // console.log('2');
         setPlayAnimation(false);
       }
 
@@ -87,9 +103,9 @@ const CharacterCanvas = (scrollPosition) => {
     handleScroll();
   
     return () => {
-      // Cleanup function
     };
-  }, [scrollPosition]);
+  }, [scrollPass]);
+
 
   return (
     <div ref={containerRef} className='relative lg:h-[75vh] mt-0 h-[50vh]'>
