@@ -20,7 +20,7 @@ const ProjectCard = ({
 }) => {
   return (
     // <motion.div variants={fadeIn("up", "spring", index * 0.2, 0.75)}
-      <div className='relative bg-tertiary md:w-[340px] md:h-[430px] w-[100%] h-[100%] rounded-2xl overflow-hidden'>
+      <div href={source_code_link} className='relative bg-tertiary md:w-[340px] md:h-[430px] w-[100%] h-[100%] rounded-2xl overflow-hidden'>
           <div style={{ backgroundImage: `url(${image})` }} className='absolute  inset-0 h-full w-full bg-cover bg-center z-[0]'></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black md:opacity-50 opacity-80 z-[0]" />
 
