@@ -249,7 +249,7 @@ const projects = [
       // },
     ],
     image: pixelpaws,
-    source_code_link: "https://github.com/",
+    source_code_link: "https://findtimo.github.io/PixelPaws/",
   },
   {
     name: "Splunk Dashboard",
