@@ -21,6 +21,7 @@
   /* scroll-snap-stop: normal; */
   height: 100vh; 
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 /* Hide the scrollbar for WebKit browsers (Chrome, Safari) */
@@ -30,11 +31,6 @@
 
 .scroll-item {
   scroll-snap-align: start;
-}
-
-.scroll-item-1 {
-  scroll-snap-align: start;
-  flex-shrink: 0;
 }
 
 .scroll-section {
